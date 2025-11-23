@@ -24,7 +24,7 @@ contract DeployCryptoRoulette is ScaffoldETHDeploy {
     function run() external ScaffoldEthDeployerRunner {
         // Placeholder Entropy address for local testing
         // TODO: Update this address for testnet/mainnet deployment
-        address entropyAddress = address(0x1234567890123456789012345678901234567890);
+        address entropyAddress = address(0x4821932D0CDd71225A6d914706A621e0389D7061);
         
         // Initial ticket price (0.001 ETH)
         uint256 ticketPrice = 0.001 ether;

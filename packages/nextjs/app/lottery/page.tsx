@@ -47,7 +47,7 @@ const LotteryPage: NextPage = () => {
   const { data: winnerEvents } = useScaffoldEventHistory({
     contractName: "DailyLottery",
     eventName: "WinnerSelected",
-    fromBlock: 0n,
+    fromBlock: BigInt(36038675), // Block where contract was deployed on Optimism Sepolia
     watch: true,
   });
 

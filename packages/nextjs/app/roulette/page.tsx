@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { formatEther, parseEther } from "viem";
@@ -44,7 +44,7 @@ const RouletteGame: NextPage = () => {
   const { data: spinRequestedEvents } = useScaffoldEventHistory({
     contractName: "CryptoRoulette",
     eventName: "SpinRequested",
-    fromBlock: 0n,
+    fromBlock: BigInt(36038675), // Block where contract was deployed on Optimism Sepolia
     watch: true,
   });
 
@@ -52,9 +52,28 @@ const RouletteGame: NextPage = () => {
   const { data: spinCompletedEvents } = useScaffoldEventHistory({
     contractName: "CryptoRoulette",
     eventName: "SpinCompleted",
-    fromBlock: 0n,
+    fromBlock: BigInt(36038675), // Block where contract was deployed on Optimism Sepolia
     watch: true,
   });
+
+  // Debugging: Log events
+  useEffect(() => {
+    console.log("📊 SpinRequested Events:", spinRequestedEvents?.length || 0);
+    console.log("📊 SpinCompleted Events:", spinCompletedEvents?.length || 0);
+    console.log("🎲 Pending Sequence Number:", pendingSequenceNumber);
+    
+    // Log detailed info of last completed event
+    if (spinCompletedEvents && spinCompletedEvents.length > 0) {
+      const lastEvent = spinCompletedEvents[spinCompletedEvents.length - 1];
+      console.log("🔍 Last SpinCompleted Event Details:", {
+        sequenceNumber: lastEvent.args.sequenceNumber?.toString(),
+        result: lastEvent.args.result,
+        resultNumber: Number(lastEvent.args.result),
+        won: lastEvent.args.won,
+        player: lastEvent.args.player,
+      });
+    }
+  }, [spinRequestedEvents, spinCompletedEvents, pendingSequenceNumber]);
 
   // Monitor for completed spins
   useEffect(() => {
@@ -68,6 +87,7 @@ const RouletteGame: NextPage = () => {
         const assetNames: Asset[] = ["BTC", "ETH", "SOL", "AVAX", "DOGE"];
         const resultAsset = assetNames[Number(completedSpin.args.result)];
 
+        console.log("✅ Spin completed! Result:", resultAsset, "Won:", completedSpin.args.won);
         setLastResult(resultAsset);
         setLastWon(completedSpin.args.won || false);
         setIsSpinning(false);
@@ -75,6 +95,26 @@ const RouletteGame: NextPage = () => {
       }
     }
   }, [spinCompletedEvents, pendingSequenceNumber]);
+
+  // Add timeout for Pyth Entropy callback (60 seconds)
+  useEffect(() => {
+    if (isSpinning && pendingSequenceNumber) {
+      console.log("⏳ Waiting for Pyth Entropy callback... Sequence:", pendingSequenceNumber);
+      
+      const timeout = setTimeout(() => {
+        console.error("⚠️ TIMEOUT: Pyth Entropy callback did not arrive after 60 seconds");
+        console.error("This might mean:");
+        console.error("1. Pyth Entropy providers are not active on Optimism Sepolia");
+        console.error("2. The entropy address is incorrect");
+        console.error("3. There's an issue with the callback function");
+        
+        setIsSpinning(false);
+        alert("Timeout: Pyth Entropy callback did not arrive. Please check the console for details.");
+      }, 60000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isSpinning, pendingSequenceNumber]);
 
   const handleSpin = async () => {
     if (!selectedAsset || !totalSpinCost) return;
@@ -105,8 +145,11 @@ const RouletteGame: NextPage = () => {
     }
   };
 
-  // Get user's recent spins
-  const userSpins = spinCompletedEvents?.filter(event => event.args.player === connectedAddress).slice(-5) || [];
+  // Get user's recent spins (reversed for display)
+  const userSpins = useMemo(() => {
+    const filtered = spinCompletedEvents?.filter(event => event.args.player === connectedAddress) || [];
+    return [...filtered].slice(-5).reverse();
+  }, [spinCompletedEvents, connectedAddress]);
 
   return (
     <div className="flex items-center flex-col grow pt-10 px-4">
@@ -181,7 +224,7 @@ const RouletteGame: NextPage = () => {
                   <p className="text-lg">
                     Result: <span className="font-bold">{lastResult}</span>
                   </p>
-                  {lastWon && <p className="text-sm mt-2">You've been added to today's lottery!</p>}
+                  {lastWon && <p className="text-sm mt-2">You&apos;ve been added to today&apos;s lottery!</p>}
                 </div>
               )}
             </div>
@@ -190,7 +233,15 @@ const RouletteGame: NextPage = () => {
 
         {/* Recent Spins History */}
         <div className="bg-base-100 rounded-2xl p-6 shadow-xl">
-          <h2 className="text-2xl font-bold mb-4">Your Recent Spins</h2>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">Your Recent Spins</h2>
+            <button
+              onClick={() => window.location.reload()}
+              className="btn btn-sm btn-outline"
+            >
+              🔄 Refresh
+            </button>
+          </div>
           {userSpins.length === 0 ? (
             <p className="text-gray-500 text-center py-4">No spins yet. Try your luck!</p>
           ) : (
@@ -204,7 +255,7 @@ const RouletteGame: NextPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {userSpins.reverse().map((spin, idx) => {
+                  {userSpins.map((spin, idx) => {
                     const assetNames: Asset[] = ["BTC", "ETH", "SOL", "AVAX", "DOGE"];
                     const resultAsset = assetNames[Number(spin.args.result)];
                     return (

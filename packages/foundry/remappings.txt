@@ -1,2 +1,4 @@
+@pythnetwork/entropy-sdk-solidity/=../../node_modules/@pythnetwork/entropy-sdk-solidity/
 @openzeppelin/contracts/=lib/openzeppelin-contracts/contracts
+
   

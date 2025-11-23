@@ -456,24 +456,7 @@ forge verify-contract <CONTRACT_ADDRESS> \
   --chain optimism-sepolia \
   --constructor-args $(cast abi-encode "constructor(address,address,uint256)" 0x4821932D0CDd71225A6d914706A621e0389D7061 <LOTTERY_ADDRESS> 1000000000000000)
 ```
-
-### Running the Frontend
-
-1. **Start the development server:**
-```bash
-yarn start
-```
-
-2. **Open your browser:**
-   - Home: http://localhost:3000
-   - Roulette: http://localhost:3000/roulette
-   - Lottery: http://localhost:3000/lottery
-   - Debug: http://localhost:3000/debug
-
-3. **Connect your wallet** and start playing!
-
 ---
-
 ## 🎲 How to Play
 
 ### Roulette Instructions
@@ -524,14 +507,6 @@ Traditional solutions often force a trade-off between:
 - **Fast** (predictable) vs **Secure** (slow)
 
 With Pyth Entropy, we get the best of all worlds: **fast, secure, and trustless**.
-
-### 💎 Economic Game Theory
-
-Our design incentivizes positive behavior:
-- Every roulette spin grows the lottery pool
-- Only winners can compete for lottery prizes
-- Creates a virtuous cycle of engagement
-
 ---
 
 ## 🔒 Security Considerations
@@ -613,78 +588,6 @@ Our design incentivizes positive behavior:
 - [Pyth Entropy Documentation](https://docs.pyth.network/entropy)
 - [Scaffold-ETH 2 Documentation](https://docs.scaffoldeth.io)
 - [Foundry Book](https://book.getfoundry.sh)
-
-### Social
-- GitHub: [Add your GitHub repo]
-- Twitter: [Add your Twitter]
-
----
-
-## 🧪 Testing
-
-Run the comprehensive test suite:
-
-```bash
-cd packages/foundry
-
-# Run all tests
-forge test
-
-# Run specific test file
-forge test --match-path test/CryptoRoulette.t.sol
-
-# Run with verbosity
-forge test -vvv
-
-# Run with gas reporting
-forge test --gas-report
-```
-
----
-
-## 📄 License
-
-MIT License
-
-Copyright (c) 2024 Crypto Roulette & Daily Lottery Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
----
-
-## 🙏 Acknowledgments
-
-- **Pyth Network** for providing industry-leading on-chain randomness through Entropy V2
-- **Scaffold-ETH 2** team for the amazing dApp development framework
-- **ETH Global** for hosting an incredible hackathon
-- **Optimism** for providing a fast, low-cost L2 environment
-- **Foundry** team for the best Solidity development toolkit
-
----
-
-## 👥 Team
-
-Built with ❤️ for ETH Global Buenos Aires
-
-[Add your team members and roles here]
-
----
 
 <div align="center">
 

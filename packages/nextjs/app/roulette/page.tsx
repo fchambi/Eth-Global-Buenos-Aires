@@ -5,7 +5,6 @@ import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { formatEther, parseEther } from "viem";
 import { AssetSelector, Asset } from "~~/components/AssetSelector";
-import { CryptoRouletteWheel } from "~~/components/CryptoRouletteWheel";
 import { useScaffoldReadContract, useScaffoldWriteContract, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 import { Address } from "@scaffold-ui/components";
 
@@ -182,52 +181,39 @@ const RouletteGame: NextPage = () => {
 
         {/* Main Game Area */}
         <div className="bg-base-100 rounded-2xl p-8 shadow-xl mb-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Left side - Wheel */}
-            <div className="flex items-center justify-center">
-              <CryptoRouletteWheel isSpinning={isSpinning} result={lastResult} />
-            </div>
+          <div className="flex flex-col items-center gap-6 max-w-md mx-auto">
+            {/* Asset Selection */}
+            <AssetSelector
+              selectedAsset={selectedAsset}
+              onSelectAsset={setSelectedAsset}
+              disabled={isSpinning}
+            />
 
-            {/* Right side - Controls */}
-            <div className="flex flex-col justify-center gap-6">
-              <AssetSelector
-                selectedAsset={selectedAsset}
-                onSelectAsset={setSelectedAsset}
-                disabled={isSpinning}
-              />
+            {/* Spin Button */}
+            <button
+              onClick={handleSpin}
+              disabled={!selectedAsset || isSpinning || !connectedAddress}
+              className={`
+                w-full py-4 px-8 rounded-xl font-bold text-2xl text-white
+                transition-all transform
+                ${
+                  !selectedAsset || isSpinning || !connectedAddress
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105"
+                }
+              `}
+            >
+              {isSpinning ? "Spinning..." : !connectedAddress ? "Connect Wallet" : "SPIN!"}
+            </button>
 
-              {/* Spin Button */}
-              <button
-                onClick={handleSpin}
-                disabled={!selectedAsset || isSpinning || !connectedAddress}
-                className={`
-                  py-4 px-8 rounded-xl font-bold text-2xl text-white
-                  transition-all transform
-                  ${
-                    !selectedAsset || isSpinning || !connectedAddress
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-gradient-to-r from-blue-500 to-purple-600 hover:scale-105"
-                  }
-                `}
-              >
-                {isSpinning ? "Spinning..." : !connectedAddress ? "Connect Wallet" : "SPIN!"}
-              </button>
-
-              {/* Result Display */}
-              {lastResult && !isSpinning && (
-                <div
-                  className={`p-6 rounded-xl text-center ${
-                    lastWon ? "bg-green-100 border-4 border-green-500" : "bg-red-100 border-4 border-red-500"
-                  }`}
-                >
-                  <p className="text-2xl font-bold mb-2">{lastWon ? "🎉 YOU WON!" : "😢 Try Again!"}</p>
-                  <p className="text-lg">
-                    Result: <span className="font-bold">{lastResult}</span>
-                  </p>
-                  {lastWon && <p className="text-sm mt-2">You&apos;ve been added to today&apos;s lottery!</p>}
-                </div>
-              )}
-            </div>
+            {/* Good Luck Message */}
+            {isSpinning && (
+              <div className="w-full p-6 rounded-xl bg-blue-50 border-2 border-blue-300 text-center animate-pulse">
+                <p className="text-lg font-semibold text-blue-800">
+                  🍀 ¡Buena suerte! Refresca si fuiste el ganador
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

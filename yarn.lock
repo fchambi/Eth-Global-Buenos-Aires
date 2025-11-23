@@ -2786,6 +2786,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pythnetwork/entropy-sdk-solidity@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@pythnetwork/entropy-sdk-solidity@npm:2.1.0"
+  checksum: c8c7ea581fc162124ea965f76883b74970f60282442b96fbdaa0d86e98de06ec64e5e4b9e38fc2ce563c03055d60e73a2c3119a35274f2777c4089b1342f2b8a
+  languageName: node
+  linkType: hard
+
 "@rainbow-me/rainbowkit@npm:2.2.8":
   version: 2.2.8
   resolution: "@rainbow-me/rainbowkit@npm:2.2.8"
@@ -3115,6 +3122,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@se-2/foundry@workspace:packages/foundry"
   dependencies:
+    "@pythnetwork/entropy-sdk-solidity": ^2.1.0
     dotenv: ~16.3.1
     envfile: ~6.18.0
     ethers: ~5.7.1

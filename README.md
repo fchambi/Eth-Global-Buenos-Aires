@@ -388,31 +388,6 @@ Unlike traditional lotteries with multiple prize tiers, our daily lottery gives 
 5. **Prize Transfer**: Winner receives entire daily pool automatically
 
 ---
-
-## 🛠️ Tech Stack
-
-### Smart Contracts
-- **Solidity**: v0.8.13
-- **Foundry**: For development, testing, and deployment
-- **OpenZeppelin**: For security patterns
-- **Pyth Entropy SDK**: v2 for randomness
-
-### Frontend
-- **Scaffold-ETH 2**: Full-stack dApp framework
-- **Next.js**: React framework with App Router
-- **RainbowKit**: Wallet connection
-- **Wagmi**: Ethereum React hooks
-- **Viem**: Ethereum interactions
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Styling
-
-### Infrastructure
-- **Optimism Sepolia**: Layer 2 testnet deployment
-- **Foundry Keystore**: Secure key management
-- **Etherscan**: Contract verification
-
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites

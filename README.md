@@ -32,6 +32,19 @@ We leverage **Pyth Entropy V2** - a cutting-edge protocol that enables permissio
 2. **🎁 Daily Lottery**: An exclusive lottery where only roulette winners can participate. One lucky winner takes the entire accumulated prize pool each day!
 
 ---
+## 🚀 Deployed Contracts
+
+### Network: Optimism Sepolia (Chain ID: 11155420)
+
+| Contract | Address | Explorer |
+|----------|---------|----------|
+| **CryptoRoulette** | `0x19aab2239911164c9051ccaed184102a10d7121f` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x19aab2239911164c9051ccaed184102a10d7121f) |
+| **DailyLottery** | `0x5149cc9f6c3a4b60cfa84125161e96b0cf677eb4` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x5149cc9f6c3a4b60cfa84125161e96b0cf677eb4) |
+| **Pyth Entropy V2** | `0x4821932D0CDd71225A6d914706A621e0389D7061` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x4821932D0CDd71225A6d914706A621e0389D7061) |
+
+**All contracts are verified and fully functional on Optimism Sepolia testnet.**
+
+
 
 ## 🔮 Pyth Entropy Integration
 
@@ -326,19 +339,6 @@ The lottery contract that manages daily draws and prize distribution.
 Interface defining the lottery contract's external functions for cross-contract communication.
 
 ---
-
-## 🚀 Deployed Contracts
-
-### Network: Optimism Sepolia (Chain ID: 11155420)
-
-| Contract | Address | Explorer |
-|----------|---------|----------|
-| **CryptoRoulette** | `0x19aab2239911164c9051ccaed184102a10d7121f` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x19aab2239911164c9051ccaed184102a10d7121f) |
-| **DailyLottery** | `0x5149cc9f6c3a4b60cfa84125161e96b0cf677eb4` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x5149cc9f6c3a4b60cfa84125161e96b0cf677eb4) |
-| **Pyth Entropy V2** | `0x4821932D0CDd71225A6d914706A621e0389D7061` | [View on Explorer](https://sepolia-optimism.etherscan.io/address/0x4821932D0CDd71225A6d914706A621e0389D7061) |
-
-**All contracts are verified and fully functional on Optimism Sepolia testnet.**
-
 ### Fees
 
 - **Entropy Fee**: ~0.0001 ETH (dynamic, query with `entropy.getFeeV2()`)
